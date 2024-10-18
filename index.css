@@ -1,6 +1,10 @@
 .container {
-    margin: 0%;
+    background-color: cadetblue;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+body {
+    background-color: blue;
 }
