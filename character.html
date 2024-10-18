@@ -1,1 +1,43 @@
 <!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Dungeons and Dragons - Character Creator</title>
+        <link rel='stylesheet' type='text/css' href='character.css'>
+        <script type='text/javascript' src='character_cookie.js'></script>
+    </head>
+    <body onload="getCookies()">
+        <form id='Character_form' >
+            <label for="Character_name">Character Name:</label>
+            <input type="text" id="Character_name" name="Character_name"><br><br>
+            <label for="Race">Race:</label>
+            <select name="Race" id="Race">
+                <option value="Changeling">Changeling</option>
+                <option value="Dragonborne">Dragonborne</option>
+                <option value="Dwarf">Dwarf</option>
+                <option value="Elf">Elf</option>
+                <option value="Human">Human</option>
+            </select><br><br>
+            <label for="Class">Class:</label>
+            <select name="Class" id="Class">
+                <option value="Artificer">Artificer</option>
+                <option value="Assassin">Assassin</option>
+                <option value="Barbarian">Barbarian</option>
+                <option value="Bard">Bard</option>
+                <option value="Cleric">Cleric</option>
+                <option value="Druid">Druid</option>
+                <option value="Mystic">Mystic</option>
+                <option value="Paladin">Paladin</option>
+                <option value="Ranger">Ranger</option>
+                <option value="Rogue">Rogue</option>
+                <option value="Sorcerer">Sorcerer</option>
+                <option value="Wizard">Wizard</option>
+            </select><br><br>
+            <label for="Backstory">Backstory:</label>
+            <textarea id="Backstory" name="Backstory" rows="5" cols="50"></textarea><br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+          </form>
+          <div id="result"></div>
+    </body>
+</html>
