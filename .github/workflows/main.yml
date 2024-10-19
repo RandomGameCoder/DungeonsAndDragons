@@ -15,5 +15,6 @@ jobs:
         uses: actions/setup-node@v1
       - name: Install dependencies
         run: npm install @google/generative-ai
-      - name: Set environment variable
-        run: sh setEnv.sh ${{ secrets.FIREBASE_API_KEY }}
+      - uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
