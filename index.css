@@ -6,6 +6,7 @@
     font-family: 'Cinzel', serif; /* A fantasy-themed font */
     color: #f5f5dc; /* Beige color */
     text-shadow: 2px 2px 5px #000000;
+    text-align: center;
 }
 
 .container {

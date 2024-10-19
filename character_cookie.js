@@ -1,34 +1,34 @@
 
-document.getElementById('Character_form').addEventListener('submit',(e) => {
-    e.preventDefault()
+document.getElementById("Character_form").addEventListener('submit',(e) => {
+    e.preventDefault();
 
-    let Character_name = document.getElementById('Character_name').value
-    let Race = document.getElementById('Race').value
-    let Class = document.getElementById('Class').value
-    let Backstory = document.getElementById('Backstory').value
+    let Character_name = document.getElementById("Character_name").value;
+    let Race = document.getElementById("Race").value;
+    let Class = document.getElementById("Class").value;
+    let Backstory = document.getElementById("Backstory").value;
 
     if (Character_name == "" || Race == "" || Class == "" || Backstory == "" )
     {
-        alert("Please Enter All The Fields....")
+        alert("Please Enter All The Fields....");
     }
 
     else{
-        setCookie(Character_name, Race, Class, Backstory, 365)
+        setCookie(Character_name, Race, Class, Backstory, 365);
     }
 })
 
 function setCookie(Character_name, Race, Class, Backstory, time){
 
-    let d = new Date()
+    let d = new Date();
 
-    d.setTime(d.getTime() + (time*24*60*60*1000))
+    d.setTime(d.getTime() + (time*24*60*60*1000));
 
-    let expires = "expires=" + d.toUTCString()
+    let expires = "expires="+d;
 
-    document.cookie = 'Character_name=${Character_name};${expires};path=/'
-    document.cookie = 'Race=${Race};${expires};path=/'
-    document.cookie = 'Class=${Class};${expires};path=/'
-    document.cookie = 'Backstory=${Backstory};${expires};path=/'
+    document.cookie = `Character_name=${Character_name};${expires};`;
+    document.cookie = `Race=${Race};${expires};`;
+    document.cookie = `Class=${Class};${expires};`;
+    document.cookie = `Backstory=${Backstory};${expires};`;
 
 }
 
@@ -48,13 +48,13 @@ function setCookie(Character_name, Race, Class, Backstory, time){
 //  }
 
 function getCookie(){
-    let cookies = document.cookie.split(';')
+    let cookies = document.cookie.split(';');
 
-    let res;
+    let res= '';
 
-    for (let i=1; i<cookies.length; i++){
-        res+= i+ '-' + cookies[i-1] + "<br>"
+    for (let i=0; i<cookies.length; i++){
+        res+= (i+1)+ '-' + cookies[i] + "<br>";
     }
 
-    document.getElementById('result').innerHTML = res
+    document.getElementById('result').innerHTML = res;
 }
