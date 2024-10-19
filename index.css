@@ -1,10 +1,11 @@
-.container {
-    background-color: cadetblue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.title {
+    font-size: xx-large;
+    font-weight: 600;
 }
 
-body {
-    background-color: blue;
+.container {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    padding-top: 20%;
 }
