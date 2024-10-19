@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>Dungeons and Dragons - Character Creator</title>
-        <link rel='stylesheet' type='text/css' href='character.css'>
-        <script type='text/javascript' src='character_cookie.js'></script>
-    </head>
-    <body onload="getCookies()">
-        <form id='Character_form' >
+<head>
+    <meta charset="UTF-8">
+    <title>Dungeons and Dragons - Character Creator</title>
+    <link rel="stylesheet" href="character.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Character</h1>
+        <form id='Character_form' method = 'post' action='game.html'>
             <label for="Character_name">Character Name:</label>
-            <input type="text" id="Character_name" name="Character_name"><br><br>
+            <input type="text" id="Character_name" name="Character_name" required>
+
             <label for="Race">Race:</label>
-            <select name="Race" id="Race">
+            <select id="Race" name="Race" required>
+                <option value="">Select race</option>
                 <option value="Changeling">Changeling</option>
                 <option value="Dragonborne">Dragonborne</option>
                 <option value="Dwarf">Dwarf</option>
                 <option value="Elf">Elf</option>
                 <option value="Human">Human</option>
-            </select><br><br>
+            </select>
+
             <label for="Class">Class:</label>
-            <select name="Class" id="Class">
+            <select id="Class" name="Class" required>
+                <option value="">Select a Class</option>
                 <option value="Artificer">Artificer</option>
                 <option value="Assassin">Assassin</option>
                 <option value="Barbarian">Barbarian</option>
@@ -32,12 +37,14 @@
                 <option value="Rogue">Rogue</option>
                 <option value="Sorcerer">Sorcerer</option>
                 <option value="Wizard">Wizard</option>
-            </select><br><br>
+            </select>
+
             <label for="Backstory">Backstory:</label>
-            <textarea id="Backstory" name="Backstory" rows="5" cols="50"></textarea><br><br>
+            <textarea id="Backstory" name="Backstory" required></textarea>
+
             <input type="submit" value="Submit">
             <input type="reset" value="Reset">
-          </form>
-          <div id="result"></div>
-    </body>
+        </form>
+    </div>
+</body>
 </html>
