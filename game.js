@@ -1,1 +1,1 @@
-const GoogleGenerativeAI = import("@google/generative-ai");
+var GoogleGenerativeAI = import("google/generative-ai");
