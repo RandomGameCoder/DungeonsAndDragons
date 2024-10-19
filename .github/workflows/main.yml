@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  update-readme-with-appinfo:
+  setup-enviromment:
     runs-on: ubuntu-latest
 
     steps:
