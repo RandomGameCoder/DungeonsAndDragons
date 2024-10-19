@@ -15,6 +15,5 @@ jobs:
         uses: actions/setup-node@v1
       - name: Install dependencies
         run: npm install @google/generative-ai
-      - name: Set API key
-        env:
-          API_KEY: ${{secrets.API_KEY}}
+    env:
+      API_KEY: ${{secrets.API_KEY}}
