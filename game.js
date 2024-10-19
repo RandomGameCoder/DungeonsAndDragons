@@ -1,1 +1,1 @@
-var GoogleGenerativeAI = import("google/generative-ai");
+import { "@google/generative-ai" as genai} from "https://esm.run/@google/generative-ai";
