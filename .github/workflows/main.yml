@@ -16,4 +16,4 @@ jobs:
       - name: Install dependencies
         run: npm install @google/generative-ai
       - name: Set environment variable
-        run: export const API_KEY = ${{secrets.API_KEY}}
+        run: sh setEnv.sh ${{ secrets.FIREBASE_API_KEY }}
