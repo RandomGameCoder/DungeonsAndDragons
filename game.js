@@ -1,1 +1,1 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI } = import("@google/generative-ai");
