@@ -9,6 +9,9 @@ body, html {
     align-items: center;
     flex-direction: column;
     background-image: url('../forest.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 {
@@ -23,8 +26,15 @@ h1 {
     right: 10px;
 }
 
-.diceButton {
-    height: 38px;
+.diceButton, .submitButton {
+    font-family: 'Cinzel', serif;
+    color: #f5f5dc;
+    background-color: #4b4b3b;
+    border: 2px solid #f5f5dc;
+    padding: 10px 20px;
+    text-shadow: 1px 1px 3px #000000;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .container {

@@ -13,32 +13,32 @@ const model = genAI.getGenerativeModel({model:"gemini-1.5-flash"});
 var result = "";
 var generated = false;
 
-const timer = 20000;
+const timer = 50000;
 
-const server = http.createServer( (req, res) => {
+const server = http.createServer(async (req, res) => {
 
-    var filePath = "";
+    let filePath = "";
 
     console.log(req.url);
-    
 
     if(req.url === "/" || req.url === "/home") {
-        filePath = __dirname + "/index.html"
+        filePath = __dirname + "/index.html";
     } else if (req.url.search(/query/)>-1) {
-        var prompt = req.url.replace(/\/query\//,"");
-        generateContent(prompt);
-        for(var i =0; i<timer; i++) {console.log(i);
+        const prompt = req.url.replace(/\/query\//,"");
+        try {
+            const result = await generateContent(prompt);
+            if(result === "") {
+                res.statusCode = 408;
+                res.end();
+                return;
+            }
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/plain");
+            res.end(result);
+        } catch (error) {
+            res.statusCode = 500;
+            res.end("Error generating content");
         }
-        generated=false;
-        console.log(result);        
-        if(result === "") {
-            res.statusCode = 408;
-            res.end()
-            return
-        }
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "text/plain");
-        res.end(result)
     } else {
         filePath = __dirname + req.url;
     }
@@ -46,7 +46,7 @@ const server = http.createServer( (req, res) => {
     fs.readFile(filePath, (err, data) => {
         if(err) {
             res.statusCode = 404;
-            res.end()
+            res.end();
             return;
         }
         res.statusCode = 200;
@@ -60,7 +60,7 @@ const server = http.createServer( (req, res) => {
             res.setHeader('Content-Type', 'text/javascript');
         }
         res.end(data);
-    })
+    });
 });
 
 server.listen(port, hostname, () => {
@@ -68,7 +68,6 @@ server.listen(port, hostname, () => {
 });
 
 async function generateContent(prompt) {
-    var response = await model.generateContent(prompt);
-    result = response.response.text()
-    generated=true;
+    const response = await model.generateContent(prompt);
+    return response.response.text();
 }
