@@ -1,5 +1,3 @@
-/* General styling */
-
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 body {
     font-family: 'Cinzel', Arial, sans-serif;
@@ -20,7 +18,6 @@ body {
     border-radius: 8px;
 }
 
-/* Form elements styling */
 form {
     display: flex;
     flex-direction: column;

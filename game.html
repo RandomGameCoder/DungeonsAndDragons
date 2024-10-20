@@ -1,38 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Webpage with Input and Buttons</title>
         <link rel="stylesheet" href="game.css">
     </head>
     <body>
         <div class="top-right-buttons">
-            <button id="inventoryButton">Inventory</button>
+            <!--<button id="inventoryButton">Inventory</button> -->
             <button id="quitButton">Quit</button>
         </div>
-
+        <h1> The Adventure Begins ....</h1>
         <div class="container">
             <textarea id="displayTextArea" class="text-area" readonly></textarea>
             <div class="input-area">
                 <input type="text" id="userInput" placeholder="Enter text here...">
-                <button id="submitButton">Submit</button>
+                <button id="diceButton" class="diceButton">Dice</button>
             </div>
         </div>
-
-        <script>
-            document.getElementById('submitButton').addEventListener('click', function() {
-                var userInput = document.getElementById('userInput').value;
-                document.getElementById('displayTextArea').value = userInput;
-            });
-
-            document.getElementById('inventoryButton').addEventListener('click', function() {
-                alert('Inventory button clicked!');
-            });
-
-            document.getElementById('quitButton').addEventListener('click', function() {
-                alert('Quit button clicked!');
-            });
-        </script>
     </body>
 </html>
