@@ -21,7 +21,34 @@ const server = http.createServer(async (req, res) => {
 
     console.log(req.url);
 
-    if(req.url === "/" || req.url === "/home") {
+    if (req.method === 'POST' && req.url === '/submit-character') {
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', () => {
+            const parsedData = parse(body);
+
+            // Extract the form data
+            const characterName = parsedData.Character_name;
+            const characterRace = parsedData.Race;
+            const characterClass = parsedData.Class;
+            const characterBackstory = parsedData.Backstory;
+
+            // Process the extracted data
+            console.log('Character Name:', characterName);
+            console.log('Character Race:', characterRace);
+            console.log('Character Class:', characterClass);
+            console.log('Character Backstory:', characterBackstory);
+
+            // Send a response back to the client
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end('<h1>Character Created Successfully</h1>');
+        });
+    }
+    else if(req.url === "/" || req.url === "/home") {
         filePath = __dirname + "/index.html";
     } else if (req.url.search(/query/)>-1) {
         const prompt = req.url.replace(/\/query\//,"");
