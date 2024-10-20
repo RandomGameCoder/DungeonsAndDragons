@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+.title {
+    font-size: xx-large;
+    font-weight: 600;
+    font-family: 'Cinzel', serif; /* A fantasy-themed font */
+    color: #f5f5dc; /* Beige color */
+    text-shadow: 2px 2px 5px #000000;
+    text-align: center;
+}
+
+.container {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    padding-top: 20%;
+}
+
+body {
+    background-color: #575545; /* Dark background color */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #f5f5dc; /* Matching text color */
+}
+
+button {
+    font-family: 'Cinzel', serif;
+    font-size: large;
+    font-weight: 600;
+    color: #f5f5dc;
+    background-color: #4b4b3b;
+    border: 2px solid #f5f5dc;
+    padding: 10px 20px;
+    text-shadow: 1px 1px 3px #000000;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #f5f5dc;
+}

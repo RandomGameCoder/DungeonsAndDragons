@@ -3,7 +3,16 @@
 <html>
     <head>
         <title>Dungeons and Dragons - Menu</title>
-        <link rel='stylesheet' type='text/css' href='index.css'>
+        <link rel='stylesheet' href='/css/index.css'>
+        <script type="text/javascript">
+            function setRandomBackground() {
+                var images = ['homepage.png', 'homepage1.png'];
+                var randomIndex = Math.floor(Math.random() * images.length);
+                var selectedImage = images[randomIndex];
+                document.body.style.backgroundImage = 'url(' + selectedImage + ')';
+            }
+            window.onload = setRandomBackground;
+        </script>
     </head>
     <body>
         <div class='container'>
