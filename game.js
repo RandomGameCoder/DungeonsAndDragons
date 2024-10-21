@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const displayTextArea = document.getElementById("displayTextArea");
     const submitButton = document.getElementById("submitButton");
 
-    submitButton.addEventListener("click", function() {
+    submitButton.addEventListener("click", async () => {
         const inputText = userInput.value;
         displayTextArea.value = inputText;
         inputText;
-        getResponse(prompt+characterData+"The player asks: "+inputText);
+        await getResponse(prompt+characterData+"The player asks: "+inputText);
     });
 });
 
@@ -38,19 +38,19 @@ async function getResponse(prompt) {
         const response = await fetch('/query', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'text/plain'
             },
-            body: JSON.stringify({ prompt })
+            body: prompt
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+            const errorText = await response.text();
+            throw new Error('Network response was not ok: ' + response.statusText + ' - ' + errorText);        }
 
         const data = await response.json();
         console.log(data.response);
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.log('There was a problem with the fetch operation:', error);
     }
 }
 

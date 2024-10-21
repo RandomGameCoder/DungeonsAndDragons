@@ -60,7 +60,7 @@ const server = http.createServer(async (req, res) => {
     }
     else if(req.url === "/" || req.url === "/home") {
         filePath = __dirname + "/index.html";
-    } else if (req.url === "/query") {
+    } else if (req.method === 'POST' && req.url === "/query") {
         let body = '';
 
         req.on('data', chunk => {
@@ -68,14 +68,23 @@ const server = http.createServer(async (req, res) => {
         });
 
         req.on('end', async () => {
-            const parsedData = JSON.parse(body);
-            const prompt = parsedData.prompt;
+            const prompt = body;
 
             try {
-                const aiResponse = await generateContent(prompt);
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ response: aiResponse }));
-            } catch (error) { console.log(error);}
+                const result = await generateContent(prompt);
+                if (result === "") {
+                    res.statusCode = 408;
+                    res.end();
+                    return;
+                }
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "text/plain");
+                res.end(result);
+            } catch (error) {
+                console.error('Error generating content:', error);
+                res.statusCode = 500;
+                res.end('Error generating content');
+            }
         });
     } else {
         filePath = __dirname + req.url;
@@ -106,6 +115,13 @@ server.listen(port, hostname, () => {
 });
 
 async function generateContent(prompt) {
-    const response = await model.generateContent(prompt);
-    return response.response.text();
+    try {
+        const response = await model.generateContent(prompt);
+        const generatedText = await response.response.text();
+        console.log(generatedText);
+        return generatedText;
+    } catch (error) {
+        console.error('Error in generateContent:', error);
+        throw error;
+    }
 }
