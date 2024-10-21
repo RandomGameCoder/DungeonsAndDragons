@@ -10,10 +10,7 @@ const API_KEY = "AIzaSyDPwVjbCHJt_FjY-zQhk6rowUubtkTrULs";
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({model:"gemini-1.5-flash"});
 
-var result = "";
-var generated = false;
-
-const timer = 50000;
+let characterData = {};
 
 const server = http.createServer(async (req, res) => {
 
@@ -21,7 +18,7 @@ const server = http.createServer(async (req, res) => {
 
     console.log(req.url);
 
-    if (req.method === 'POST' && req.url === '/submit-character') {
+    if (req.url === '/submit-character') {
         let body = '';
 
         req.on('data', chunk => {
@@ -29,13 +26,22 @@ const server = http.createServer(async (req, res) => {
         });
 
         req.on('end', () => {
-            const parsedData = parse(body);
+            const parsedData = JSON.parse(body);
+
+            console.log(parsedData);
 
             // Extract the form data
             const characterName = parsedData.Character_name;
             const characterRace = parsedData.Race;
             const characterClass = parsedData.Class;
             const characterBackstory = parsedData.Backstory;
+
+            characterData = {
+                characterName,
+                characterRace,
+                characterClass,
+                characterBackstory
+            };
 
             // Process the extracted data
             console.log('Character Name:', characterName);
@@ -44,28 +50,33 @@ const server = http.createServer(async (req, res) => {
             console.log('Character Backstory:', characterBackstory);
 
             // Send a response back to the client
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end('<h1>Character Created Successfully</h1>');
+            res.writeHead(302, { 'Location': '/game.html' });
+            res.end();
         });
+    }
+    else if (req.url === '/get-character-data') { // Add this endpoint
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(characterData));
     }
     else if(req.url === "/" || req.url === "/home") {
         filePath = __dirname + "/index.html";
-    } else if (req.url.search(/query/)>-1) {
-        const prompt = req.url.replace(/\/query\//,"");
-        try {
-            const result = await generateContent(prompt);
-            if(result === "") {
-                res.statusCode = 408;
-                res.end();
-                return;
-            }
-            res.statusCode = 200;
-            res.setHeader("Content-Type", "text/plain");
-            res.end(result);
-        } catch (error) {
-            res.statusCode = 500;
-            res.end("Error generating content");
-        }
+    } else if (req.url === "/query") {
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', async () => {
+            const parsedData = JSON.parse(body);
+            const prompt = parsedData.prompt;
+
+            try {
+                const aiResponse = await generateContent(prompt);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ response: aiResponse }));
+            } catch (error) { console.log(error);}
+        });
     } else {
         filePath = __dirname + req.url;
     }

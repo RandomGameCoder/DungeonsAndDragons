@@ -8,12 +8,12 @@
 <body>
     <div class="container">
         <h1>Create Your Character</h1>
-        <form id='Character_form' method = 'post' action='/submit-character'>
+        <form id='Character_form' method = 'post'>
             <label for="Character_name">Character Name:</label>
-            <input type="text" id="Character_name" name="Character_name" required>
+            <input type='text' id='Character_name' name='Character_name' required>
 
             <label for="Race">Race:</label>
-            <select id="Race" name="Race" required>
+            <select id="Race" name='Race' required>
                 <option value="">Select race</option>
                 <option value="Changeling">Changeling</option>
                 <option value="Dragonborne">Dragonborne</option>
@@ -23,7 +23,7 @@
             </select>
 
             <label for="Class">Class:</label>
-            <select id="Class" name="Class" required>
+            <select id="Class" name='Class' required>
                 <option value="">Select a Class</option>
                 <option value="Artificer">Artificer</option>
                 <option value="Assassin">Assassin</option>
@@ -46,5 +46,51 @@
             <input type="reset" value="Reset">
         </form>
     </div>
+    <script>
+        const form = document.getElementById("Character_form");
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            fetch('/submit-character', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'game.html';
+                } else {
+                    // Handle errors here
+                    console.error('Error:', response.statusText);
+                }
+            })
+            .catch(error => {
+                // Handle network errors here
+                console.error('Network Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+<!-- try {
+    const result = await generateContent(prompt);
+    if(result === "") {
+        res.statusCode = 408;
+        res.end();
+        return;
+    }
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    res.end(result);
+} catch (error) {
+    res.statusCode = 500;
+    res.end("Error generating content");
+} -->

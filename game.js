@@ -1,4 +1,6 @@
-var prompt = "Hello";
+var prompt = "You are a game master of a dungeouns and dragons game. You need to give the player scenarios for a new dungeons and dragons game based on their character. their character data is as follows:";
+
+characterData = "";
 
 document.addEventListener("DOMContentLoaded", function() {
     const userInput = document.getElementById("userInput");
@@ -8,16 +10,48 @@ document.addEventListener("DOMContentLoaded", function() {
     submitButton.addEventListener("click", function() {
         const inputText = userInput.value;
         displayTextArea.value = inputText;
-        prompt = inputText;
-        start();
+        inputText;
+        getResponse(prompt+characterData+"The player asks: "+inputText);
     });
 });
 
+async function getCharacterData() {
+    try {
+        const response = await fetch('http://127.0.0.1:3000/get-character-data');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
 
-async function start() {
-    await fetch("query/"+prompt).then(result => {
-        console.log(result.text());
-    });
+        characterData += `Character Name: ${data.characterName}, Character Race: ${data.characterRace}`;
+        characterData += `Character Class: ${data.characterClass}, Character Backstory: ${data.characterBackstory}`;
+
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+}
+
+window.addEventListener("load", getCharacterData);
+
+async function getResponse(prompt) {
+    try {
+        const response = await fetch('/query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ prompt })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log(data.response);
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
 }
 
 // window.addEventListener('load',start)
